@@ -52,10 +52,9 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 
 //GENERATING A JWT TOKEN WHEN A USER REGISTERS OR LOGINS. 
 userSchema.methods.getJWTToken = function () {
-  const expiresIn =  '10d';
-   // Default to 1 day if not provided
-   const JWT_SECRET_KEY = "ashtonagar"
-  return jwt.sign({ id: this._id }, JWT_SECRET_KEY, { expiresIn });
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
 };
 
 export const User = mongoose.model("User", userSchema);
